@@ -6,7 +6,7 @@ export default function Dictionary() {
   const [keyWord, setKeyWord] = useState("");
 
   function handleResponse(response) {
-    console.log(response.data[0]);
+    console.log(response);
   }
 
   function search(event) {
