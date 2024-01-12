@@ -2,3 +2,7 @@
   text-align: center;
   margin: 10px auto;
 }
+
+.App .container {
+  text-align: center;
+}
