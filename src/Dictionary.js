@@ -1,22 +1,33 @@
 import React, { useState } from "react";
 import axios from "axios";
 import Results from "./Results";
+import Photos from "./Photos";
 import "./Dictionary.css";
 
 export default function Dictionary(props) {
   const [keyWord, setKeyWord] = useState(props.defaultKeyword);
   const [results, setResults] = useState(null);
   const [loaded, setLoaded] = useState(false);
+  const [photos, setPhotos] = useState(null);
 
-  function handleResponse(response) {
+  function handleDictionaryResponse(response) {
     setResults(response.data);
+  }
+
+  function handleImageResponse(response) {
+    console.log(response);
+    setPhotos(response.data.photos);
   }
 
   function search() {
     //https://www.shecodes.io/learn/apis/dictionary
     let apiKey = "4126dae244a02f134d2t0cdo0b2944b0";
     let apiUrl = `https://api.shecodes.io/dictionary/v1/define?word=${keyWord}&key=${apiKey}`;
-    axios.get(apiUrl).then(handleResponse);
+    axios.get(apiUrl).then(handleDictionaryResponse);
+
+    let imageApiKey = "4126dae244a02f134d2t0cdo0b2944b0";
+    let imgageApiUrl = `https://api.shecodes.io/images/v1/search?query=${keyWord}&key=${imageApiKey}`;
+    axios.get(imgageApiUrl).then(handleImageResponse);
   }
 
   function handleSubmit(event) {
@@ -50,6 +61,7 @@ export default function Dictionary(props) {
           <div className="hint">Suggested Words: sunset, plants, book...</div>
         </section>
         <Results results={results} />
+        <Photos photod={photos} />
       </div>
     );
   } else {
